@@ -11,7 +11,7 @@ class Value(models.Model):
     def to_dict(self):
         return {"%s" % self.key: "%s" % self.value}
 
-    def __unicode__(self):
+    def __str__(self):
         output = {"%s" % self.key: "%s" % self.value}
         return "%s  - %s " % (self.user, json.dumps(output))
 
@@ -23,5 +23,5 @@ class Token(models.Model):
     user = models.ForeignKey(User)
     token = models.CharField(max_length=512, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.token

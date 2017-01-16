@@ -12,6 +12,12 @@ import random
 
 @csrf_exempt
 def register_application(request):
+    '''
+    Some old code that *sort-of* supplants the
+    user with a token based model for uber simple auth.
+
+    Probably a better way of doing this now...
+    '''
     token = request.POST.get("token", False)
     if not token:
         new_token = generate_token()
@@ -54,6 +60,11 @@ def retrieve_all(request):
 
 
 def return_json(request, data):
+    '''
+    Util function left over from
+    a lack oa JsonResponse object.
+    Still logs users out though.
+    '''
     logout(request)
     return JsonResponse(data)
 
@@ -66,6 +77,9 @@ def generate_token(length=64):
 
 
 def check_for_token(request):
+    '''
+    Simple auth util function.
+    '''
     token = request.POST.get("token", False)
     if not token:
         raise PermissionDenied("No token supplied")
