@@ -1,16 +1,15 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from drawer.views import register_application
+from drawer.views import store_value
+from drawer.views import retrieve_value
+from drawer.views import retrieve_all
 
-urlpatterns = patterns('drawer.views',
-    # Examples:
-    # url(r'^$', 'weakbox.views.home', name='home'),
-    url(r'^register/$','registerApplication',name="register"),
-    url(r'^store/(?P<key>\w{1,20})/(?P<value>\w{0,100})/$','storeValue',name="store"),
-    url(r'^retrieve/(?P<key>\w{1,20})/$','retrieveValue',name="retrieve"),
-    url(r'^retrieve/$','retrieveAll',name="retrieveAll"),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
-)
+urlpatterns = [
+    url(r'^register/$', register_application, name="register"),
+    url(r'^store/(?P<key>\w{1,20})/(?P<value>\w{0,100})/$',
+        store_value, name="store"),
+    url(r'^retrieve/(?P<key>\w{1,20})/$',
+        retrieve_value, name="retrieve"),
+    url(r'^retrieve/$', retrieve_all, name="retrieve_all"),
+]

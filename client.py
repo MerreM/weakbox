@@ -1,25 +1,35 @@
+#!/usr/bin/env python
 import requests
-import json
 
-def getToken():
-    response = requests.post("http://127.0.0.1:8000/api/register/")
-    token = json.loads(response.content)
-    return token
+API_ROOT = "http://127.0.0.1:8001/api/{}"
 
-def testClient():
-    token = getToken()
-    response = requests.post("http://127.0.0.1:8000/api/store/key//",data=token)
-    print response
-    response = requests.post("http://127.0.0.1:8000/api/store/storeMe/Value/",data=token)
-    print response
-    response = requests.post("http://127.0.0.1:8000/api/retrieve/key/",data=token)
-    print response
-    response = requests.post("http://127.0.0.1:8000/api/retrieve/",data=token)
-    print response
-    response = requests.post("http://127.0.0.1:8000/api/store/tooolongkeynamevaluestorethrowanerror//",data=token)
-    ## This error could be more informative.
-    print response
+
+def get_token():
+    response = requests.post(API_ROOT.format("register/"))
+    return response.json()
+
+
+def test_client():
+    token = get_token()
+    response = requests.post(API_ROOT.format("store/key//"), data=token)
+    print(response)
+
+    response = requests.post(API_ROOT.format(
+        "store/storeMe/Value/"), data=token)
+    print(response)
+
+    response = requests.post(
+        API_ROOT.format("retrieve/key/"), data=token)
+    print(response)
+
+    response = requests.post(API_ROOT.format("retrieve/"), data=token)
+    print(response)
+
+    response = requests.post(
+        API_ROOT.format(
+            "store/tooolongkeynamevaluestorethrowanerror//"), data=token)
+    print(response)
 
 
 if __name__ == "__main__":
-    testClient()
+    test_client()
